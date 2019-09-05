@@ -13,17 +13,45 @@
 
 
 
+## git创建空白新分支
+
+- 创建并切换新分支
+
+  git branch <new_branch>
+
+  git checkout <new_branch>
+
+  git rm --cached -r .
+
+  git clean -f -d
+
+- 创建空的commit
+
+  git commit --allow-empty -m "empty commit"
+
+- 推送新分支
+
+  git push origin <new_branch>
+
+
+
 ## git分支管理
 
 - git branch 	# 查看本地分支
-
 - git branch -a     # 查看远程分支
-
 - git checkout -b 分支名    # 切换分支（如果不存在，则新建分支）
-
 - git checkout 分支名    # 切换分支
 
-  
+
+
+## git删除分支
+
+- git checkout 分支名	# 先切换到别的分支
+- git branch -d 分支名       # 删除本地要删除的分支
+- git branch -D 分支名      # 强制删除分支
+- git push origin -delete 分支名        # 删除远程分支
+
+
 
 ## git多人协作工作模式
 
