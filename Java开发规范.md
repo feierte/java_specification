@@ -40,7 +40,7 @@
 
 ## Java I/O
 
-**1、[<font face='黑体' color='red'>强制</font>] 当使用外部资源（网络I/O、数据库连接、文件流等），请使用jdk1.7提供的try-with-resource处理机制来自动关闭资源，外部对象的句柄必须实现了AutoCloseable接口。**
+**1、[<font face='黑体' color='red'>强制</font>] 当使用外部资源（网络I/O、数据库连接、文件流等），请使用jdk1.7提供的try-with-resource处理机制来自动关闭资源，外部对象的句柄必须实现了java.lang.AutoCloseable接口（其中，也包括实现了java.io.Closeable的对象，因为Closeable接口继承了AutoCloseable接口）。**
 
 > > - 说明 传统关闭资源方式
 > >
@@ -68,22 +68,37 @@
 > >   - 显示关闭外部资源过程繁琐，需要写大量模板代码
 > >   - 不符合面向对象编程思想，当外部资源使用完毕后，应该由外部资源句柄自动关闭连接，这样更加符合面向对象编程理念。
 
-- 使用try-with-resource自动关闭资源
+使用try-with-resource自动关闭资源
 
-  ```java
-  try (InputStream inputStream = new FileInputStream(new File("test"));
-      BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "utf-8"))) {
-      // 处理输入流
-  } catch (IOException e) {
-      e.printStackTrace();
-  }
-  ```
+```java
+try (InputStream inputStream = new FileInputStream(new File("test"));
+    BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "utf-8"))) {
+    // 处理输入流
+} catch (IOException e) {
+    e.printStackTrace();
+}
+```
 
-- 异常抑制：这是try-with-resource涉及到的另一个知识点，当对外部资源进行处理时（读或写），遭遇到了异常，且在随后的关闭资源时，又遭遇到了异常，那么catch代码块捕捉到的将是在对外部资源进行处理时遭遇到的异常。而关闭资源时的异常将会被抑制，但是不丢弃，通过调用异常类的getSuppressed()方法提取出被抑制的异常。
+异常抑制：这是try-with-resource涉及到的另一个知识点，当对外部资源进行处理时（读或写），遭遇到了异常，且在随后的关闭资源时，又遭遇到了异常，那么catch代码块捕捉到的将是在对外部资源进行处理时遭遇到的异常。而关闭资源时的异常将会被抑制，但是不丢弃，通过调用异常类的getSuppressed()方法提取出被抑制的异常。
 
 
 
 ## 多线程
+
+**1、[<font face='黑体' color='red'>强制</font>]线程资源（例如：数据库连接、http连接等）必须使用线程池，不允许自己在应用中显示创建线程。**
+
+说明 线程池的好处是减少在创建和销毁线程上所消耗的时间以及系统资源的开销，解决资源不足的问题。如果不使用线程池，有可能造成系统创建大量同类线程而导致消耗完内存或者“过度切换”的问题。
+
+
+
+什么时候需要手动创建线程，而不使用线程池？
+
+- 需要自定义线程的优先级，线程池中线程的优先级总是normal。
+- 需要一个前台线程，线程池中线程是后台线程。
+- 需要手动终止线程，线程池不具有这种功能。
+- 线程执行时间长，线程池目的是为了线程重用，省去创建新线程的额外开销，多适用于多而执行时间短的线程。但是线程池创建线程是滞后的，不会发现线程不够就立即去创建新线程，会有个延迟，以确保真正的需要创建新线程。
+
+
 
 
 
