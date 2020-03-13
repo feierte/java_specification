@@ -1,16 +1,6 @@
 # Java开发规范
 
-
-> > > > > > > > 
-> > > > > > > >
-> > > > > > > > 
-> > > > >
-> > > > > 
-> > > >
-> > > > > > > >
-
-
->>> Less coding, More thinking!!!
+> >  Less coding, More thinking!!!
 
 ## 基本类型
 
@@ -54,7 +44,7 @@
 > >   } finally {
 > >       if (null != inputStream) {
 > >           try {
-> >               inputStream.close();            
+> >               inputStream.close();           
 > >           } catch(IOException e) {
 > >               e.printStackTrace();
 > >           }
@@ -107,20 +97,6 @@ try (InputStream inputStream = new FileInputStream(new File("test"));
 
 
 
-
-
-
-
-
-
-
-> > > > > > > > 
-> > > > > > > >
-> > > > > > > > 
-> > > > >
-> > > > > 
-> > > >
-> > > > > > > 
 
 
 

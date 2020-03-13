@@ -13,6 +13,18 @@
 
 
 
+## 提交代码到新建的git项目
+
+
+
+- git init
+- git add .
+- git commit -m "first commit"
+- git remote add origin git @github.com:feierte/test.git
+- git push -u origin master
+
+
+
 ## git创建空白新分支
 
 - 创建并切换新分支
@@ -145,7 +157,23 @@ git push origin master
 - git config --global i18n.commit.encoding utf-8      # 提交信息编码
 - git config --global i18n.logoutputencoding utf-8      # 输出 log 编码
 
-## git仓库迁移
+## git仓库迁移（保留分支和历史提交）
+
+1、先克隆老项目的镜像
+
+- git clone --mirror old.git（old.git为老项目的git地址）
+
+2、进入老项目的目录
+
+- cd old.git
+
+3、移除老项目的地址替换成新项目
+
+- git remote set-url --push origin new.git（new.git为新项目的git地址）
+
+4、将镜像推到远程
+
+- git push --mirror ## 这一步有可能需要输入新的git账号和密码
 
 
 
